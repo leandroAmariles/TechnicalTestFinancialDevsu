@@ -1,0 +1,33 @@
+CREATE TABLE PERSON_DEVSU
+(
+    personId      BIGINT NOT NULL AUTO_INCREMENT,
+    name           VARCHAR(255) NULL,
+    gender         VARCHAR(255) NULL,
+    age            INT    NOT NULL,
+    identification VARCHAR(255) NULL,
+    address        VARCHAR(255) NULL,
+    phone          VARCHAR(255) NULL,
+    CONSTRAINT pk_person PRIMARY KEY (personId)
+);
+
+# GRANT SELECT,INSERT,DELETE,UPDATE ON PERSON_DEVSU TO root;
+
+
+CREATE TABLE CLIENT_DEVSU
+(
+    personId BIGINT       NOT NULL,
+    clientId VARCHAR(255) NOT NULL,
+    password  VARCHAR(255) NULL,
+    status    BIT(1) NULL,
+    CONSTRAINT pk_client PRIMARY KEY (personId),
+    CONSTRAINT fk_client_person FOREIGN KEY (personId) REFERENCES PERSON_DEVSU(personId)
+);
+
+# GRANT SELECT,INSERT,DELETE,UPDATE ON CLIENT_DEVSU TO root;
+
+
+ALTER TABLE PERSON_DEVSU
+    ADD CONSTRAINT uc_client_clientid UNIQUE (personId);
+
+ALTER TABLE PERSON_DEVSU
+    ADD CONSTRAINT FK_CLIENT_ON_PERSONID FOREIGN KEY (personId) REFERENCES PERSON_DEVSU (personId);
